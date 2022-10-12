@@ -66,9 +66,10 @@ public class DragInteractable : XRBaseInteractable
         {
             // get a line in local space
             Vector3 line = startDragPos.localPosition - endDragPos.localPosition;
+            Debug.DrawLine(line, startDragPos.localPosition);
 
             // convert our itneractor position to local space
-            Vector3 interactorLocalPosition = startDragPos.parent.InverseTransformPoint(m_interactor.transform.transform.transform.position);
+            Vector3 interactorLocalPosition = startDragPos.parent.InverseTransformPoint(m_interactor.transform.position);
 
             // project the interactor position onto the line
             Vector3 projectedPoint = Vector3.Project(interactorLocalPosition, line.normalized);

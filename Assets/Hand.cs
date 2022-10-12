@@ -100,7 +100,7 @@ public class Hand : MonoBehaviour
 
     public void Show()
     {
-        Debug.Log("Show function executed");
+        //Debug.Log("Show function executed");
 
         //loop through all Mesh Renderer components in the global Current Renderers list
         foreach (Renderer renderer in m_currentRenderers)
@@ -116,7 +116,7 @@ public class Hand : MonoBehaviour
 
     public void Hide()
     {
-        Debug.Log("Hide function executed");
+        //Debug.Log("Hide function executed");
 
         //clear the list of current Renderers
         m_currentRenderers.Clear();
@@ -153,7 +153,7 @@ public class Hand : MonoBehaviour
 
     void OnGrab(XRBaseInteractable grabbedObject)
     {
-        Debug.Log("We have grabbed an object named " + grabbedObject.name);
+        //Debug.Log("We have grabbed an object named " + grabbedObject.name);
 
         HandControl ctrl = grabbedObject.GetComponent<HandControl>();
         if(ctrl != null)
