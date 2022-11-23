@@ -5,7 +5,7 @@ using UnityEngine;
 public class ThrowSwitchTask : Task
 {
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
          
     }
@@ -15,4 +15,14 @@ public class ThrowSwitchTask : Task
     {
         
     }
+
+    public void OnActivation()
+    {
+        //SetTaskText("The monster needs some more charge");
+        //SetTaskText("Try putting 
+        
+        //a coroutine that changes the text twice
+    }
+
+
 }

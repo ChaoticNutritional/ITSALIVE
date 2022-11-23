@@ -8,26 +8,27 @@ public class PushButtonTask : Task
     private string ButtonText = "PUSH THE BUTTON PLEASE!";
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        TaskActivate += OnButtonTaskActivation;
         SetTaskText(ButtonText);
     }
 
-
-
-    // Update is called once per frame
-    void Update()
+    public void OnButtonTaskActivation()
     {
-        if (isActive == true)
+        if(isActive)
         {
             correctStatus = true;
-            isActive = false;
+            Debug.Log("You pushed the button just like we said :)");
         }
 
         else
         {
-            correctStatus = false;
-            isActive = false;
+            Debug.Log("You pressed the button when we didn't tell you to :(");
         }
+
+        TaskCompleted();
     }
+
+    
 }
