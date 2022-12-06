@@ -9,7 +9,6 @@ public class Task : MonoBehaviour
     public bool isActive = false;
     public string taskText;
     public bool completeStatus;
-    public TaskManager taskManager;
 
     public delegate void TaskCompletion();
     public static event TaskCompletion OnComplete;
@@ -52,6 +51,7 @@ public class Task : MonoBehaviour
     //set complete for completion array
     public void TaskCompleted()
     {
+        Debug.Log("A task was completed by: " + this.gameObject.name);
         OnComplete();
     }
 

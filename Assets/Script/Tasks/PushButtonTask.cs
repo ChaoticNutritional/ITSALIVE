@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class PushButtonTask : Task
 {
-    [SerializeField]
     private string ButtonText = "PUSH THE BUTTON PLEASE!";
 
     // Start is called before the first frame update
-    void Awake()
+
+    public void Start()
     {
-        TaskActivate += OnButtonTaskActivation;
-        SetTaskText(ButtonText);
+       this.taskText = ButtonText;
+    }
+
+    public void BeenChosen()
+    {
+        Debug.Log("Button has been chosen and button text should be displayed");
+
+
     }
 
     public void OnButtonTaskActivation()
@@ -26,9 +32,8 @@ public class PushButtonTask : Task
         {
             Debug.Log("You pressed the button when we didn't tell you to :(");
         }
-
         TaskCompleted();
     }
 
-    
+
 }

@@ -14,9 +14,11 @@ public class PutThingTask : Task
     public GameObject redPotion;
     public GameObject bluePotion;
     public GameObject greenPotion;
+    public AudioSource potAudio;
 
     [SerializeField]
     private GameObject[] potions = new GameObject[3];
+    private bool[] beenChosen = new bool[3];
 
 
     //fill the potions array at start
@@ -27,6 +29,11 @@ public class PutThingTask : Task
         potions[0] = redPotion;
         potions[1] = bluePotion;
         potions[2] = greenPotion;
+
+        for(int i = 0; i < 3; i++)
+        {
+            beenChosen[0] = false;
+        }
     }
 
     //Randomly select potion from the list.
@@ -37,31 +44,16 @@ public class PutThingTask : Task
         
 
         //OR
-
-        //if potions[potionIndex] isn't found in the scene, choose another one
-        while(!CheckIfInScene(potions[potionIndex]))
+        while(beenChosen[potionIndex])
         {
             potionIndex = Random.Range(0, potions.Length);
         }
 
         Debug.Log("I choose: " + potions[potionIndex]);
         thingToPut = potions[potionIndex].name;
-
+        beenChosen[potionIndex] = true;
 
         return potions[potionIndex];
-    }
-
-    private bool CheckIfInScene(GameObject targetPotion)
-    {
-        if (GameObject.Find(targetPotion.name) != null)
-        {
-            //it exists
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     //set object to be put
@@ -86,6 +78,8 @@ public class PutThingTask : Task
 
         //Call function to set taskText to your taskText created in this scope
         SetTaskText(PutThingText);
+
+        SetSource(currentPotion);
 
         //Manager will use the GetTaskText() function to gain access to this string
     }
@@ -114,14 +108,18 @@ public class PutThingTask : Task
                 isActive = false;
             }
             //destroy the object you threw in the pot
-            potion.GetComponent<XRGrabInteractable>().colliders.Clear();
-            Destroy(potion);
-            Debug.Log("Destroying: " + collision.gameObject.name.ToUpper());
 
-            //Complete a task regardless of its correct status
+            potAudio.Play();
+            potion?.GetComponent<XRGrabInteractable>()?.colliders.Clear();
+            Destroy(potion);
+
+
+            //Activate smoke rising from cauldron. PENDING
+
+            //Play sizzling sound DONE
+
+            //Complete a task regardless of its correct status DONE
             TaskCompleted();
-            
-            Debug.Log("TASK COMPLETE");
         }
     }
 }

@@ -61,6 +61,7 @@ public class TaskManager : MonoBehaviour
     public void OnActivation()
     {
         TaskPrompt();
+        //Activate vocalization
     }
 
     //Subscribed to the Completion event located in the task class
@@ -73,20 +74,30 @@ public class TaskManager : MonoBehaviour
 
         if(taskCorrect[currentTaskIndex] == false)
         {
+            Debug.Log("You did the wrong task");
             //play sad animation
         }
         else
         {
+            Debug.Log("You did the right task");
             //play happy animation
         }
 
         //increase the currentTask index
-        currentTaskIndex += 1;
+        if(currentTaskIndex < taskList.Length - 1)
+        {
+            //set current task =to the next task in task List
+            currentTaskIndex += 1;
+            currentTask = taskList[currentTaskIndex];
+            currentTask.SetActive();
+            TaskPrompt();
+        }
+        else
+        {
+            TallyCorrects();
+        }
+       
 
-        //set current task =to the next task in task List
-        currentTask = taskList[currentTaskIndex];
-        currentTask.SetActive();
-        TaskPrompt();
     }
 
     void Update()
@@ -98,12 +109,18 @@ public class TaskManager : MonoBehaviour
 
     public void TaskPrompt()
     {
+        Debug.Log("CALLING FROM TASK MGR. Task text = " + (currentTask.GetTaskText()));
         //Have the doctor display the current task's text
         DoctorText.text = currentTask.GetTaskText();
     }
 
     public void TallyCorrects()
     {
+        Debug.Log("Counting your corrects");
+
+        //Stop all animations
+        //Play some sort of anticipation sounds
+        //Trigger doctor scheming animation
         int scoreCount = 0;
 
         for (int i = 0; i < taskCorrect.Length; i++)
@@ -113,6 +130,8 @@ public class TaskManager : MonoBehaviour
                 scoreCount++;
             }
         }
+        
+        Debug.Log("Your score: " + scoreCount);
 
         // after tallying score, check if we have won or lost
         GetWinState(scoreCount, taskCorrect);
@@ -122,11 +141,26 @@ public class TaskManager : MonoBehaviour
     {
         if (points < taskArray.Length)
         {
+            //monster gets up and disintegrates
+            //after this animation happens, Doctor is sad
+            //Doctor sighs and says I guess we'll just have to try again.
+            //Doctor says "We'll have to find a fresh corpse to work with. And I happen to know just where to get one." and points at player
+            //Fade screen to black, return to menu
+
             return false;
         }
 
         else
         {
+            //monster gets up and dances, play puttin on the ritz instrumental
+            //doctor cheers, anim and sound
+            //doctor stands idle
+            //Doctor says "thank you for your help assistant, I couldn't have done this without you"
+            //Monster turns to Doctor and begins to look aggressive.
+            //Doctor fear animation
+            //Doctor fall animation as Monster pursues Doctor
+            //fade screen to black
+
             return true;
         }
     }

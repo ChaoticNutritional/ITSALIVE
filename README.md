@@ -8,14 +8,15 @@ What does this do? You can go more here. Any inspiration? Info dump :D
 ## Getting Started
 Hey! I want to run this on my PC, how do I do it? 
 
+### Pre-requisites 
 In order to develop this game, you will need:
 
-Unity 2019.4 (.13 or higher, but check later)
+Windows 10
+Unity 2019.4.13f
 Universal Render Pipeline
 Shader Graph
 
-(i recommend doing one OS first, then if you want compatibility go back later later)
-### Pre-requisites (
-- do I need anything? Any one-click downloads ie unity? Any specific ver?
+Substatial testing requires the Oculus Quest 2 and a USB-C Link Cable, or Oculus AirLink enabled.
+
 ### Instructions
 steps

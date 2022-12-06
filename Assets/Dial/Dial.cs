@@ -10,11 +10,10 @@ public class Dial : MonoBehaviour
 
     MeshRenderer meshRenderer = null;
 
-    public Material gooColor = null;
+    //PROTOTYPE
+    //public GameObject rayHolder = null;
+    //public Material greenMaterial = null;
 
-    public float activeColorInGoo;
-
-    public bool[] ActiveColor = new bool[3];
 
 
     //segment rotation into 3 parts each corresponding to RGB values;
@@ -26,8 +25,9 @@ public class Dial : MonoBehaviour
 
     public void StartTurn()
     {
+
+
         m_startRotation = transform.localEulerAngles;
-        //meshRenderer.material.SetColor("_Color", new Vector4(Mathf.Clamp01(219), Mathf.Clamp01(112), Mathf.Clamp01(147), 1));
     }
 
     public void StopTurn()
@@ -40,5 +40,18 @@ public class Dial : MonoBehaviour
         Vector3 angles = m_startRotation;
         angles.z += angle;
         transform.localEulerAngles = angles;
+
+
+        //PROTOTYPE 
+        /*RaycastHit hit;
+        Ray ray = new Ray(rayHolder.transform.position, rayHolder.transform.up);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider != null)
+            {
+                hit.collider.gameObject.GetComponent<Material>().SetColor("_Color", Color.green);
+            }
+        }*/
     }
 }

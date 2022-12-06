@@ -302,17 +302,6 @@
                 },
                 {
                     "name": "",
-                    "id": "8e383b1a-270f-4c20-819b-89a59cffb498",
-                    "path": "<XRController>{LeftHand}/Primary2DAxis",
-                    "interactions": "",
-                    "processors": "StickDeadzone",
-                    "groups": "Continuous Move",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "830c14df-3b19-4470-b5d6-7e4cad86b44b",
                     "path": "<XRController>{LeftHand}/Primary2DAxis",
                     "interactions": "",
@@ -330,6 +319,17 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Haptic Device",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4205dea2-95b3-4f30-b99a-5744e5363759",
+                    "path": "<XRController>{LeftHand}/Primary2DAxis",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
+                    "groups": "Continuous Move;Generic XR Controller",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
