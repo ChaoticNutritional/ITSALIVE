@@ -117,7 +117,7 @@ PlayerSettings:
   stadiaTargetFramerate: 0
   vulkanNumSwapchainBuffers: 3
   vulkanEnableSetSRGBWrite: 0
-  vulkanEnableLateAcquireNextImage: 0
+  vulkanEnableLateAcquireNextImage: 1
   m_SupportedAspectRatios:
     4:3: 1
     5:4: 1
@@ -125,7 +125,10 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 11400000, guid: 7e3a680483a419f43a70f5f540275544, type: 2}
+  - {fileID: 7679759174423748307, guid: cd345ed68154d3a4eb404a9b5ea8c85b, type: 2}
+  - {fileID: 11400000, guid: f8d14ae44e8299348a7948aaa0c5be40, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TaskManager : MonoBehaviour
 {
@@ -34,27 +35,41 @@ public class TaskManager : MonoBehaviour
     //narrator's text
     public Text DoctorText;
 
+    public Animation[] happyAnims;
+    public Animation[] sadAnims;
+
+    public string[] onboardingText;
+    public AudioClip[] onboardingAudio;
+
+    public Animator corpseStand;
+    public GameObject newFrank;
+    public GameObject frankieHolder;
+
+    public Animator DoctorAnim;
+    public AudioSource DoctorAudio;
+
+    public GameObject dancingFrank;
+    
+
+    public struct Onboarding
+    {
+        string aText;
+        AudioClip aSound;
+    }
+
+    public Onboarding[] OnboardingPool;
+
+    public DissolveController dissolveController;
+
 
     void Start()
     {
-        Task.OnComplete += OnCompletion;
+        
     }
 
     private void Awake()
     {
-        for (int i = 0; i < taskList.Length; i++)
-        {
-            taskID = Mathf.Abs(Random.Range(0, allTasks.Length));
-
-            Debug.Log(taskID);
-
-            taskList[i] = allTasks[taskID];
-        }
-
-        currentTaskIndex = 0;
-        currentTask = taskList[currentTaskIndex];
-        currentTask.SetActive(); //sets active variable to true;
-        Invoke("OnActivation", 0.0f);
+        StartCoroutine(WaitAFew());
     }
 
     
@@ -96,15 +111,11 @@ public class TaskManager : MonoBehaviour
         {
             TallyCorrects();
         }
-       
-
     }
 
-    void Update()
+    public void CurrentTaskListener()
     {
-        //if any other task gets compelted while its not active
-        //set current task correct to false
-        //move to next task.
+
     }
 
     public void TaskPrompt()
@@ -139,19 +150,45 @@ public class TaskManager : MonoBehaviour
 
     public bool GetWinState(int points, bool[] taskArray)
     {
+        StartCoroutine(RiseAndWalk());
+        
+
+        //LOSE GAME
         if (points < taskArray.Length)
         {
+            //NEEDS:
+
+            //Monster gets up from table; || accomplished by animation
+
+
+            //Unparent monster from table || accomplished by animation event
+
+            //Reference to table animator  || DONE
+            //EndRaise trigger for table animator true; || DONE
+
+            newFrank.GetComponent<Animator>().SetBool("DidWeWin", false);
+            StartCoroutine(AngryResult());
+
+            
+            
+
             //monster gets up and disintegrates
             //after this animation happens, Doctor is sad
             //Doctor sighs and says I guess we'll just have to try again.
             //Doctor says "We'll have to find a fresh corpse to work with. And I happen to know just where to get one." and points at player
             //Fade screen to black, return to menu
 
+
             return false;
         }
 
+        //WIN GAME
         else
         {
+            newFrank.GetComponent<Animator>().SetBool("DidWeWin", true);
+            StartCoroutine(WatchHimDance());
+
+
             //monster gets up and dances, play puttin on the ritz instrumental
             //doctor cheers, anim and sound
             //doctor stands idle
@@ -163,5 +200,138 @@ public class TaskManager : MonoBehaviour
 
             return true;
         }
+    }
+
+    IEnumerator WaitAFew()
+    {
+        yield return new WaitForSeconds(3);
+        StartCoroutine(OnBoarding());
+
+        //play sound
+        //activate animation
+        //change dialogue
+    }
+
+    //Present onboarding text and sounds to player
+    IEnumerator OnBoarding()
+    {
+        int counter = 0;
+
+        while (counter < onboardingText.Length)
+        {
+
+            DoctorText.text = onboardingText[counter];
+            DoctorAudio.PlayOneShot(onboardingAudio[Random.Range(0, onboardingAudio.Length)]);
+            new WaitForSeconds(7);
+            counter++;
+            yield return new WaitForSeconds(7);
+        }
+
+        DoctorText.text = "Now.... Let's begin...";
+        new WaitForSeconds(5);
+        StartCoroutine(TaskSpinup());
+    }
+
+    IEnumerator TaskSpinup()
+    {
+        yield return new WaitForSeconds(5);
+
+        Task.OnComplete += OnCompletion;
+
+
+
+        for (int i = 0; i < taskList.Length; i++)
+        {
+            taskID = Mathf.Abs(Random.Range(0, allTasks.Length));
+
+            Debug.Log(taskID);
+
+            taskList[i] = allTasks[taskID];
+        }
+
+        currentTaskIndex = 0;
+        currentTask = taskList[currentTaskIndex];
+        while (currentTask == null)
+        {
+            Debug.Log("waiting for current task to load");
+        }
+        currentTask?.SetActive();  //sets active variable to true;
+        Invoke("OnActivation", 0.0f);
+    }
+
+    IEnumerator RiseAndWalk()
+    {
+        corpseStand.SetTrigger("EndRaise");
+        DoctorAnim.SetTrigger("LookOn");
+        yield return new WaitForSeconds(3);
+
+        newFrank.GetComponent<Animator>().SetTrigger("getUp");
+        //newFrank.transform.parent = frankieHolder.transform;
+        newFrank.transform.SetPositionAndRotation(new Vector3(3.633754f, -0.130233f, 0.7654648f), Quaternion.Euler(0f, 0f, 0f));
+        newFrank.transform.parent = null;
+
+
+    }
+
+    IEnumerator WatchHimDance()
+    {
+        //doctor animator trigger look
+        yield return new WaitForSeconds(3);
+
+        //doctor animator trigger cheer
+        DoctorAnim.SetTrigger("Dance");
+        
+
+
+        //doctor animator trigger silly dance
+
+        //doctor animator trigger talk
+
+        DoctorText.text = "You did it! Great job assistant! Goodbye!";
+        DoctorAudio.PlayOneShot(onboardingAudio[Random.Range(0, onboardingAudio.Length)]);
+        yield return new WaitForSeconds(12);
+
+        //return to menu
+        ReturnToMenu();
+
+    }
+
+    private void ReturnToMenu()
+    {
+        newFrank.transform.parent = frankieHolder.transform;
+        SceneLoader.Instance.LoadNewScene("MenuScene");
+        StopCoroutine(WatchHimDance());
+
+        
+    }
+
+    IEnumerator AngryResult()
+    {
+        newFrank.transform.parent = frankieHolder.transform;
+        yield return new WaitForSeconds(2);
+
+        DoctorText.text = "NO!!!";
+        yield return new WaitForSeconds(2);
+
+        DoctorText.text = "We were so close.";
+        DoctorAudio.PlayOneShot(onboardingAudio[Random.Range(0, onboardingAudio.Length)]);
+
+        yield return new WaitForSeconds(3);
+
+        DoctorText.text = "Now I'll need to start from scratch with another body....";
+        DoctorAudio.PlayOneShot(onboardingAudio[Random.Range(0, onboardingAudio.Length)]);
+
+        yield return new WaitForSeconds(3);
+
+        DoctorAnim.SetTrigger("AngryApproach");
+        yield return new WaitForSeconds(1);
+        DoctorText.text = "And I think I know just where to find one..... heheheheh";
+        
+        DoctorAudio.PlayOneShot(onboardingAudio[Random.Range(0, onboardingAudio.Length)]);
+
+
+        yield return new WaitForSeconds(2);
+
+        ReturnToMenu();
     }
 }

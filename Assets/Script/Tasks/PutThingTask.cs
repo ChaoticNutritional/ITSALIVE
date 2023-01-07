@@ -87,7 +87,8 @@ public class PutThingTask : Task
     //This is what will complete the task
     public void OnTriggerEnter(Collider collision)
     {
-        if (!collision.gameObject.CompareTag("Controller"))
+        
+        if (collision.gameObject.CompareTag("Potion") && !collision.gameObject.CompareTag("Controller"))
         {
             GameObject potion = collision.gameObject;
             if (isActive == true)
@@ -102,9 +103,16 @@ public class PutThingTask : Task
                 else
                 {
                     Debug.Log("You put the wrong object in the pot");
+                    Debug.Log(collision.name + "hit the pot");
                 }
                 //else, the correct status remains false on the current object
                 SetCorrectStatus(correctStatus);
+                isActive = false;
+            }
+
+            else
+            {
+                correctStatus = false;
                 isActive = false;
             }
             //destroy the object you threw in the pot

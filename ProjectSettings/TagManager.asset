@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Controller
+  - Potion
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - 
   - 
   - Masking
-  - 
-  - 
+  - PLAYER
+  - WALL
   - 
   - 
   - 
