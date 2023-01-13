@@ -22,7 +22,6 @@ public class Lever : MonoBehaviour
         meshRenderer.material.SetColor("_Color", Color.red);
         //Debug.Log("started pulling lever");
         corpseAnim.SetBool("IsIdle", false);
-
     }
 
     public void OnLeverPullStop()

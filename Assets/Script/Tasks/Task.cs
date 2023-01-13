@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Task : MonoBehaviour
 {
-    public bool correctStatus;
+    public bool correctStatus = false;
     public bool isActive = false;
     public string taskText;
     public bool completeStatus;
@@ -47,10 +48,10 @@ public class Task : MonoBehaviour
     }
 
 
-    //set Complete variable
-    public void SetCompletion(bool complete)
+    //set complete for completion array
+    public void TaskCompleted()
     {
-        completeStatus = complete;
+        Debug.Log("A task was completed by: " + this.gameObject.name);
         OnComplete();
     }
 

@@ -34,7 +34,7 @@ public class PushButton : MonoBehaviour
     //list of colliders to track any and all finger digit colliders coming in contact with the button
     List<Collider> m_currentColliders = new List<Collider>();
 
-    //initializes our interactor which will eventually be our hands
+    //initializes our interactor which will eventually be fur hands
     XRBaseInteractor m_interactor = null;
 
     // Start is called before the first frame update
@@ -70,6 +70,7 @@ public class PushButton : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
         XRBaseInteractor interactor = other.GetComponentInParent<XRBaseInteractor>();
         if(interactor != null && !other.isTrigger)
         {
