@@ -1,6 +1,8 @@
 # It's ALIVE!
 It's ALIVE! is a single-player VR experience in which you play the Doctor's assistant. Your goal: to bring the doctor's creation to life!
 
+DEMO VIDEO:
+
 [![Watch the trailer video](https://img.youtube.com/vi/ZgRkX5hGNJI/maxresdefault.jpg)](https://www.youtube.com/watch?v=ZgRkX5hGNJI)
 
 ## About
